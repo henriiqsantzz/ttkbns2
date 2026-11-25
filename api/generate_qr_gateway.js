@@ -160,9 +160,14 @@ module.exports = async function handler(req, res) {
     });
     providerData = await readJson(providerResponse);
   } catch (error) {
-    console.error('ElevyPay create transaction failed:', error.message);
-    return send(res, 502, { success: false, error: 'Não foi possível conectar à ElevyPay.' });
-  }
+  // Log detalhado para diagnóstico
+  console.error('Falha de conexão com ElevyPay:', {
+    message: error.message,
+    cause: error.cause,
+    stack: error.stack
+  });
+  return send(res, 502, { success: false, error: 'Não foi possível conectar à ElevyPay.' });
+}
 
   if (!providerResponse.ok || !providerData.success) {
   const apiMessage = providerData.message || providerData.error || JSON.stringify(providerData);
