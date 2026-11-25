@@ -1,0 +1,16 @@
+Uri: https://realizasonhos.win/3/?camp=ipa&tk=23a15b51-6167-408a-ab97-46d761a95f2d&src=KL&city=Botucatu&sck=TT-1795377485726-fmmnjauwxstvf
+File Name: C:\Downloaded Web Sites\realizasonhos.win\3\index.htm
+Content Type: text/html
+
+Uri: https://realizasonhos.win/3/_external/fonts.googleapis.com/css2-q-52b23be40d
+File Name: C:\Downloaded Web Sites\realizasonhos.win\3\_external\fonts.googleapis.com\css2-q-52b23be40d
+Content Type: application/octet-stream
+
+Uri: https://realizasonhos.win/assets/aviso.js
+File Name: C:\Downloaded Web Sites\realizasonhos.win\assets\aviso-2.js
+Content Type: application/javascript
+
+Uri: https://realizasonhos.win/assets/tracking.js
+File Name: C:\Downloaded Web Sites\realizasonhos.win\assets\tracking-2.js
+Content Type: application/javascript
+
