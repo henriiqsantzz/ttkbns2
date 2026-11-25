@@ -165,12 +165,13 @@ module.exports = async function handler(req, res) {
   }
 
   if (!providerResponse.ok || !providerData.success) {
-    console.error('ElevyPay create transaction error:', providerResponse.status, providerData);
-    const message = providerResponse.status === 401
-      ? 'A ElevyPay recusou a autenticação. Confira a API Key.'
-      : (providerData.message || providerData.error || 'A ElevyPay não conseguiu gerar a cobrança.');
-    return send(res, 502, { success: false, error: String(message).slice(0, 300) });
-  }
+  const apiMessage = providerData.message || providerData.error || JSON.stringify(providerData);
+  console.error('ElevyPay error:', providerResponse.status, apiMessage);
+  return send(res, 502, { 
+    success: false, 
+    error: `ElevyPay: ${apiMessage}` 
+  });
+}
 
   const transactionId = providerData.transaction_id;
   const pixCode = providerData.pix_code;
