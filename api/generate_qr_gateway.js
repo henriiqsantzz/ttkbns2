@@ -2,6 +2,8 @@
 const { randomInt } = require('node:crypto');
 
 const DEFAULT_API_KEY = 'elevy_sk_5037e236b2676f5539347840298ea00b3cf60454d32cab8d927da2a8d1a4ae2e';
+// ⚠️ COLE O HASH DO PRODUTO AQUI (obtido no painel da ElevyPay)
+const ELEVYPAY_PRODUCT_HASH = 'prod_d4840adbe8d79cf3'; 
 const ELEVYPAY_API_URL = 'https://app.elevypay.com/api/v1/transaction.php';
 const CPF_GENERATOR_URL = 'https://www.cpf.dev.br/api/v1/cpf/gerar?quantidade=1&formatado=false';
 const DDD_LIST = [11,12,13,14,15,16,17,18,19,21,22,24,27,28,31,32,33,34,35,37,38,41,42,43,44,45,46,47,48,49,51,53,54,55,61,62,63,64,65,66,67,68,69,71,73,74,75,77,79,81,82,83,84,85,86,87,88,89,91,92,93,94,95,96,97,98,99];
@@ -136,6 +138,9 @@ module.exports = async function handler(req, res) {
     payment_method: 'pix',
     description: description,
     postback_url: postbackUrl,
+    // ⚠️ Envia o hash como 'productHash' (camelCase). 
+    // Se a API reclamar, tente 'product_hash' (snake_case).
+    productHash: ELEVYPAY_PRODUCT_HASH,
     customer: {
       name: name,
       email: email,
@@ -162,7 +167,6 @@ module.exports = async function handler(req, res) {
     return send(res, 502, { success: false, error: 'Não foi possível conectar à ElevyPay.' });
   }
 
-  // CORREÇÃO: A API da ElevyPay retorna status: "success" em vez de success: true
   const isApiSuccess = providerData.success === true || providerData.status === 'success';
 
   if (!providerResponse.ok || !isApiSuccess) {
@@ -173,7 +177,6 @@ module.exports = async function handler(req, res) {
     return send(res, 502, { success: false, error: String(message).slice(0, 300) });
   }
 
-  // CORREÇÃO: O código do PIX pode vir em 'pix_code' ou 'qr_code'
   const transactionId = providerData.transaction_id;
   const pixCode = providerData.pix_code || providerData.qr_code;
 
